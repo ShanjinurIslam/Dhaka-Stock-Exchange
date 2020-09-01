@@ -39,4 +39,36 @@ const getLatestStockPrice = (callback) => {
     })
 }
 
-module.exports = getLatestStockPrice
+const company_price_data = (name, type, duration, callback) => {
+    var valid_durations = [1, 3, 6, 9, 12, 24];
+    var valid_types = ['price', 'vol', 'trd'];
+
+    // validity_check required
+
+    var duration = duration.toString()
+    request.get("https://www.dsebd.org/php_graph/monthly_graph.php?inst=" + name + "&duration=" + 24 + "&type=" + type, (error, res, body) => {
+        if (error) {
+            callback({ error: error })
+        }
+        else {
+            var findStr = "// CSV or path to a CSV file.";
+            var endStr = "// options go here."
+            var start_index = body.indexOf(findStr) + findStr.length
+            var end_index = body.indexOf(endStr)
+
+            csv_file = body.substr(start_index, end_index - start_index).trim().replace('{', "")
+            price_list = csv_file.split('+')
+            final_list = []
+            for (var i = 1; i < price_list.length; i++) {
+                var values = price_list[i].replace("\"", "").trim().split('\\')[0].split(',')
+                final_list.push({ date: values[0], type: parseFloat(values[1]), })
+            }
+            callback(final_list)
+        }
+    });
+}
+
+/*
+module.exports = { getLatestStockPrice, company_price_data }*/
+
+company_details('ABBANK')
