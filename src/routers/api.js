@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { getLatestStockPrice, company_price_data } = require('../controllers/htmlParser')
+const { getLatestStockPrice, company_price_data, company_details } = require('../controllers/htmlParser')
 
 
 router.get('/latest_price', (req, res) => {
@@ -10,6 +10,15 @@ router.get('/latest_price', (req, res) => {
         else {
             return res.status(200).send(out)
         }
+    })
+})
+
+
+router.get('/company_details', (req, res) => {
+    const name = req.query.name
+
+    company_details(name, (value) => {
+        res.status(200).send(value)
     })
 })
 

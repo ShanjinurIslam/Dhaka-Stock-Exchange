@@ -1,5 +1,7 @@
 const htmlParser = require('node-html-parser')
 const request = require('request')
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 const getStockDetails = (stock) => {
     var row_parent = stock.parentNode.parentNode
@@ -68,7 +70,37 @@ const company_price_data = (name, type, duration, callback) => {
     });
 }
 
-/*
-module.exports = { getLatestStockPrice, company_price_data }*/
+const company_details = (name, callback) => {
+    request.get('https://www.dsebd.org/displayCompany.php?name=' + name, (error, res, body) => {
+        if (error) {
+            callback({ error: error })
+        }
+        else {
+            const dom = new JSDOM(body);
+            var tables = dom.window.document.querySelectorAll('#company')
+            var market_info = new Object()
+            var basic_info = new Object()
 
-company_details('ABBANK')
+            // Working on tables[1] Market Information
+            var market_info_fields = ['LTP', 'CLOSEP', 'LASTUPDATE', 'DR', 'CA', 'DR', 'CP', 'YEARLYMR', 'OP', 'DV', 'AOP', 'DT', 'YCP', 'MC']
+
+            var infos = tables[1].querySelectorAll('td')
+
+            market_info['LTP'] = parseFloat(infos[0].textContent);
+            for (var i = 0; i < infos.length; i++) {
+                market_info[market_info_fields[i]] = infos[i].textContent.trim()
+            }
+
+            var basic_info_fields = ['AC', 'DTD', 'PC', 'TI', 'FACEPV', 'ML', 'TOS', 'Sector']
+
+            var basic = tables[2].querySelectorAll('td')
+            for (var i = 0; i < basic_info_fields.length; i++) {
+                basic_info[basic_info_fields[i]] = basic[i].textContent.trim()
+            }
+
+            callback({ market_info, basic_info })
+        }
+    })
+}
+
+module.exports = { getLatestStockPrice, company_price_data, company_details } 
