@@ -19,6 +19,17 @@ const getStockDetails = (stock) => {
     return object
 }
 
+const getCompanyList = (callback) => {
+    request.get('https://www.dsebd.org/datafile/quotes.txt', (error, res, body) => {
+        var company_list = []
+        parsed = body.split('\n');
+        for (var i = 4; i < parsed.length - 1; i++) {
+            company_list.push({ id: i - 3, name: parsed[i].split(' \t')[0].trim() })
+        }
+        callback(company_list)
+    })
+}
+
 const getLatestStockPrice = (callback) => {
     request.get('https://www.dsebd.org/latest_share_price_scroll_l.php', (error, res, body) => {
         if (error) {
@@ -103,4 +114,4 @@ const company_details = (name, callback) => {
     })
 }
 
-module.exports = { getLatestStockPrice, company_price_data, company_details } 
+module.exports = { getLatestStockPrice, company_price_data, company_details, getCompanyList } 

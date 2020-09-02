@@ -3,6 +3,8 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const apiRouter = require('./routers/api')
 
+require('./db')
+
 app = express()
 
 server = http.createServer(app)

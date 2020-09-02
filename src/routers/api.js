@@ -1,6 +1,13 @@
 const router = require('express').Router()
-const { getLatestStockPrice, company_price_data, company_details } = require('../controllers/htmlParser')
+const { getLatestStockPrice, company_price_data, company_details, getCompanyList } = require('../controllers/htmlParser')
 
+
+router.get('/company_list', (req, res) => {
+    getCompanyList((value) => {
+        console.log(value)
+        res.status(200).send(value)
+    })
+})
 
 router.get('/latest_price', (req, res) => {
     getLatestStockPrice((out) => {
