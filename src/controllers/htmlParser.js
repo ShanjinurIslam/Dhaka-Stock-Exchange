@@ -12,12 +12,7 @@ const getStockDetails = (stock) => {
     var j = 0;
     for (var i = 5; i < row_parent.childNodes.length; i++) {
         if (row_parent.childNodes[i].childNodes.length > 0) {
-            if (attributes[j] == 'CHANGE') {
-                object[attributes[j++]] = row_parent.childNodes[i].childNodes[0].rawText.toString()
-            }
-            else {
-                object[attributes[j++]] = parseFloat(row_parent.childNodes[i].childNodes[0].rawText)
-            }
+            object[attributes[j++]] = row_parent.childNodes[i].childNodes[0].rawText.toString()
         }
     }
 
