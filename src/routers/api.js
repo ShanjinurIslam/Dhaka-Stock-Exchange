@@ -4,8 +4,18 @@ const { getLatestStockPrice, company_price_data, company_details, getCompanyList
 
 router.get('/company_list', (req, res) => {
     getCompanyList((value) => {
-        console.log(value)
+
         res.status(200).send(value)
+    })
+})
+
+router.get('/share_price', (req, res) => {
+    company_name = req.query.name
+    getLatestStockPrice((out) => {
+        var stocks = out.stocks
+        stocks = stocks.filter((e) => e.TRADING_CODE == company_name)
+
+        res.status(200).send(stocks[0])
     })
 })
 
