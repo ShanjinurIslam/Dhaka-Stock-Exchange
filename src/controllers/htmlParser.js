@@ -59,7 +59,7 @@ const company_price_data = (name, type, duration, callback) => {
     // validity_check required
 
     var duration = duration.toString()
-    request.get("https://www.dsebd.org/php_graph/monthly_graph.php?inst=" + name + "&duration=" + 24 + "&type=" + type, (error, res, body) => {
+    request.get("https://www.dsebd.org/php_graph/monthly_graph.php?inst=" + name + "&duration=" + duration + "&type=" + type, (error, res, body) => {
         if (error) {
             callback({ error: error })
         }
