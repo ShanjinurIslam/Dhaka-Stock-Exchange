@@ -74,7 +74,7 @@ const company_price_data = (name, type, duration, callback) => {
             final_list = []
             for (var i = 1; i < price_list.length; i++) {
                 var values = price_list[i].replace("\"", "").trim().split('\\')[0].split(',')
-                final_list.push({ date: values[0], type: parseFloat(values[1]), })
+                final_list.push({ date: values[0], data: values[1] })
             }
             callback(final_list)
         }
