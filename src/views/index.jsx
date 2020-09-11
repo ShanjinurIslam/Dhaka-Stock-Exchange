@@ -12,7 +12,7 @@ function Index(props) {
                     API Platform
                 </h1>
             </Col>
-            <Col style={{ marginTop: '15%' }}>
+            <Col style={{ marginTop: '15%', marginLeft: '5%' }}>
                 <h4>Available APIs</h4>
 
                 <ul>

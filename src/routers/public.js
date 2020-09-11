@@ -22,7 +22,7 @@ router.get('/plot', (req, res) => {
                 data.push(parseFloat(out[i].data))
             }
 
-            return res.status(200).render('plot', { title: name + ' ' + type + ' plot ' + ' of ' + duration + ' month(s)' })
+            return res.status(200).render('plot', { title: name + ' ' + type + ' plot ' + ' of ' + duration + ' month(s)', labels: labels, data: data })
         }
     })
 })
