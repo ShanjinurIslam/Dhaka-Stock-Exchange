@@ -22,3 +22,20 @@
 ```
 
 # Dhaka-Stock-Exchange
+
+Available APIs
+/company_list
+Method: GET
+URL: /api/company_list
+/share_price
+Method: GET
+URL: /api/share_price?name=ABBANK
+/company_details
+Method: GET
+URL: /api/company_details?name=ABBANK
+/latest_price
+Method: GET
+URL: /api/latest_price
+/company_data
+Method: GET
+URL: /api/company_data?name=ABBANK&type=price&duration=24
